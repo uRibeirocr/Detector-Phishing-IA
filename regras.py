@@ -1,7 +1,7 @@
 import re 
 from urllib.parse import urlparse
 
-PALAVRAS_SUSPEITAS = ["Verificar","conta","senha", ...]
+PALAVRAS_SUSPEITAS = ["verificar","conta","senha","urgente","login", "atualizar", "bloqueada", "confirmar"]
 
 def analisar_url(url: str) -> dict:
     pontos = 0
@@ -29,9 +29,9 @@ def analisar_url(url: str) -> dict:
         if p in url.lower():
             encontradas.append(p)
         
-        if encontradas:
-            pontos += len(encontradas)
-            motivos.append(f"Palavras suspeitas: {', '.join(encontradas)}")
+    if encontradas:
+        pontos += len(encontradas)
+        motivos.append(f"Palavras suspeitas: {', '.join(encontradas)}")
 #regra 5
 
     if not url.startswith("https://"):
@@ -42,5 +42,6 @@ def analisar_url(url: str) -> dict:
         pontos += 2
         motivos.append("Contém '@' na URL")
 
+    return {"pontos": pontos, "motivos": motivos}
 
 
