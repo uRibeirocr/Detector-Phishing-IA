@@ -1,4 +1,7 @@
 from regras import analisar_url
+from banco import criar_banco
+
+criar_banco()
 
 url = input("Cole a URl: ")
 resultado = analisar_url(url)
