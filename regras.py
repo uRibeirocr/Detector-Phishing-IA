@@ -1,5 +1,6 @@
 import re 
 from urllib.parse import urlparse
+from marcas import MARCAS
 
 PALAVRAS_SUSPEITAS = ["verificar","conta","senha","urgente","login", "atualizar", "bloqueada", "confirmar"]
 
@@ -41,7 +42,15 @@ def analisar_url(url: str) -> dict:
     if "@" in url:
         pontos += 2
         motivos.append("Contém '@' na URL")
+#regra 7
+    for marca, oficial in MARCAS.items():
+        if marca in dominio:
+            e_oficial = dominio == oficial or dominio.endswith("." + oficial)
+            if not e_oficial:
+                pontos += 3
+                motivos.append(f"Imita a marca '{marca}', mas nao é o site oficial")
 
     return {"pontos": pontos, "motivos": motivos}
+
 
 
